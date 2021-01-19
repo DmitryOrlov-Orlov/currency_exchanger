@@ -1,0 +1,40 @@
+.position {
+  position: relative;
+  width: 415px;
+  padding: 15px 14px;
+  border-radius: 5px;
+  background: #816eff;
+  margin: 15px 0;
+}
+
+.position__titles {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  grid-template-rows: 30px 30px;
+}
+.position__titles p {
+  margin: 0 auto;
+}
+
+.position__titles .currency__first,
+.currency__second {
+  width: 120px;
+}
+.position__titles .cours {
+  width: 50px;
+}
+
+.position__titles input {
+  margin: 0 auto;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  text-align: center;
+  -webkit-appearance: none;
+}
+.position__titles input::-webkit-outer-spin-button,
+.position__titles input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
