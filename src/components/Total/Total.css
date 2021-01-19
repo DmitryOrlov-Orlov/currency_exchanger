@@ -1,0 +1,36 @@
+.total {
+  position: relative;
+  width: 415px;
+  padding: 15px 14px;
+  border-radius: 5px;
+  background: #816eff;
+  margin: 15px 0;
+}
+
+.total__titles {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  grid-template-rows: 30px 30px;
+}
+.total__titles p {
+  margin: 0 auto;
+}
+
+.total__currency__first,
+.total__currency {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  background: #fff;
+}
+.total__currency__second {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.total__red {
+  color: red;
+}

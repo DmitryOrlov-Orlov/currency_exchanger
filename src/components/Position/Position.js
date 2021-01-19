@@ -12,17 +12,17 @@ const Position = () => {
     if (cours === '') {
       return false;
     };
-    setCurrencySecond((target.value / cours).toFixed(4));
+    setCurrencySecond((target.value / cours).toFixed(2));
   };
   const coursHeandler = ({ target }) => {
     setCours(target.value);
-    setCurrencySecond((currencyFirst / target.value).toFixed(4));
+    setCurrencySecond((currencyFirst / target.value).toFixed(2));
   };
   const currencySecondHeandler = ({ target }) => {
     setCurrencySecond(target.value);
-    setCurrencyFirst((target.value * cours).toFixed(4));
+    setCurrencyFirst((target.value * cours).toFixed(2));
   };
-  let InputCurrencyArr = [
+  let InputCurrencyItems = [
     {
       id: 1,
       placeholder: '40000',
@@ -45,15 +45,6 @@ const Position = () => {
       onChange: currencySecondHeandler
     },
   ];
-  let InputCurrencyItems = InputCurrencyArr.map(item => {
-    return (<InputCurrency
-      key={item.id}
-      placeholder={item.placeholder}
-      className={item.className}
-      value={item.value}
-      onChange={item.onChange}
-    />);
-  });
 
   return (
     <div className='position'>
@@ -61,7 +52,14 @@ const Position = () => {
         <p>Российский рубль</p>
         <p>Курс</p>
         <p>Доллар США</p>
-        {InputCurrencyItems}
+        {InputCurrencyItems.map(item => (<InputCurrency
+          key={item.id}
+          placeholder={item.placeholder}
+          className={item.className}
+          value={item.value}
+          onChange={item.onChange}
+        />)
+        )}
       </div>
       <BtnDeletePosition />
     </div>
