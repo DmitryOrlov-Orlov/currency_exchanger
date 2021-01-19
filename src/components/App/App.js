@@ -1,8 +1,13 @@
 import './App.css';
+import Position from '../Position/Position';
 
-function App() {
+const App = () => {
+
   return (
     <div>
+      <Position />
+      <Position />
+      <Position />
 
     </div>
   );
