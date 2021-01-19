@@ -6,9 +6,6 @@ const App = () => {
   return (
     <div>
       <Position />
-      <Position />
-      <Position />
-
     </div>
   );
 }
