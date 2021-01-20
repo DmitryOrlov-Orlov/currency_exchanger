@@ -1,6 +1,6 @@
 import React from 'react';
-import './BtnDeletePosition.css';
+import classes from './BtnDeletePosition.module.css';
 
-const BtnDeletePosition = () => <button className='btn__delete__position'></button>
+const BtnDeletePosition = () => <button className={classes.btn__delete__position}></button>
 
 export default BtnDeletePosition;

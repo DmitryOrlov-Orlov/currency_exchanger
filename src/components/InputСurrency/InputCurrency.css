@@ -7,10 +7,11 @@ input {
   text-align: center;
   -webkit-appearance: none;
 }
-.currency__first,
-.currency__second {
+.currency__second,
+.currency__first {
   width: 110px;
 }
-.position__titles .cours {
+.position__titles,
+.cours {
   width: 50px;
 }

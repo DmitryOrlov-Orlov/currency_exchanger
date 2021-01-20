@@ -1,0 +1,49 @@
+.perspective {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  grid-template-rows: 30px 30px 30px 40px 40px;
+  width: 415px;
+  padding: 15px 14px;
+  border-radius: 5px;
+  background: #816eff;
+  margin: 15px auto;
+}
+.perspective h4 {
+  grid-column: 1 / span 3;
+}
+
+input {
+  margin: 0 auto;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  text-align: center;
+  -webkit-appearance: none;
+}
+.currency__second,
+.currency__first {
+  width: 110px;
+}
+.position__titles,
+.cours {
+  width: 50px;
+}
+.teg__margin {
+  margin: 10px auto;
+  grid-column: 2 / span 1;
+  grid-row: 4;
+}
+
+.margin__number {
+  grid-column: 3 / span 1;
+  grid-row: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  background: blue;
+  margin: 10px auto;
+}
