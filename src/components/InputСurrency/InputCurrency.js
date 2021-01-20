@@ -1,18 +1,16 @@
 import React from 'react';
 import './InputCurrency.css';
 
-const InputCurrency = (props) => {
+const InputCurrency = ({ placeholder, className, value, onChange }) => {
 
   return (
-    <>
-      <input
-        type="number"
-        placeholder={props.placeholder}
-        className={props.className}
-        value={props.value}
-        onChange={props.onChange}
-      />
-    </>
+    <input
+      type="number"
+      placeholder={placeholder}
+      className={className}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 
