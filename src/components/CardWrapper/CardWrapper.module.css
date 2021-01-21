@@ -1,0 +1,10 @@
+.card__wrapper {
+  width: 500px;
+  background: chartreuse;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+.card__wrapper h4 {
+  margin: 0;
+}

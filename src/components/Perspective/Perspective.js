@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import BtnDeletePosition from '../BtnDeletePosition/BtnDeletePosition';
 import InputCurrency from '../InputСurrency/InputCurrency';
-import classes from './Position.module.css';
+import BtnRestore from '../BtnRestore/BtnRestore';
+import classes from './Perspective.module.css';
 
-const Position = () => {
+const Perspective = () => {
+
   const [currencyFirst, setCurrencyFirst] = useState('');
   const [cours, setCours] = useState('');
   const [currencySecond, setCurrencySecond] = useState('');
@@ -46,24 +47,26 @@ const Position = () => {
     },
   ];
 
+
   return (
-    <div className={classes.position}>
-      <div className={classes.position__titles}>
-        <p>Российский рубль</p>
-        <p>Курс</p>
-        <p>Доллар США</p>
-        {InputCurrencyItems.map(item => (<InputCurrency
-          key={item.id}
-          placeholder={item.placeholder}
-          className={item.className}
-          value={item.value}
-          onChange={item.onChange}
-        />)
-        )}
-      </div>
-      <BtnDeletePosition />
+    <div className={classes.perspective}>
+      <h4>ПЕРСПЕКТИВА (обратнная конвертация)</h4>
+      <p>Российский рубль</p>
+      <p>Текущий Курс</p>
+      <p>Доллар США</p>
+      {InputCurrencyItems.map(item => (<InputCurrency
+        key={item.id}
+        placeholder={item.placeholder}
+        className={item.className}
+        value={item.value}
+        onChange={item.onChange}
+      />)
+      )}
+      <p className={classes.teg__margin}>Маржа:</p>
+      <div className={classes.margin__number}>+96000</div>
+      <BtnRestore />
     </div>
   )
-};
+}
 
-export default Position;
+export default Perspective;

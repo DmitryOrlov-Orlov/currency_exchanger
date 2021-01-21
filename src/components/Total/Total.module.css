@@ -4,7 +4,7 @@
   padding: 15px 14px;
   border-radius: 5px;
   background: #816eff;
-  margin: 15px 0;
+  margin: 15px auto;
 }
 
 .total__titles {
@@ -16,8 +16,7 @@
   margin: 0 auto;
 }
 
-.total__currency__first,
-.total__currency {
+.total__currency__first {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,6 +26,13 @@
   background: #fff;
 }
 .total__currency__second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  background: #fff;
   grid-column: 3;
   grid-row: 2;
 }

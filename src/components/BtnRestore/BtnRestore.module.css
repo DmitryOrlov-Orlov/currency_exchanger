@@ -1,0 +1,12 @@
+.button {
+  grid-column: 3 / span 1;
+  grid-row: 5;
+  width: 130px;
+  height: 32px;
+  margin: 10px auto;
+  border-radius: 5px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  background: crimson;
+}

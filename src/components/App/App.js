@@ -1,13 +1,13 @@
 import './App.css';
-import Position from '../Position/Position';
-import Total from '../Total/Total';
+import CardWrapper from '../CardWrapper/CardWrapper';
+import './App.css';
 
 const App = () => {
 
   return (
-    <div>
-      <Position />
-      <Total />
+    <div className='wrapper'>
+      <h1>Currency exchanger</h1>
+      <CardWrapper />
     </div>
   );
 }
