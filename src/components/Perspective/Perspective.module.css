@@ -11,24 +11,6 @@
 .perspective h4 {
   grid-column: 1 / span 3;
 }
-
-input {
-  margin: 0 auto;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  padding: 5px 10px;
-  text-align: center;
-  -webkit-appearance: none;
-}
-.currency__second,
-.currency__first {
-  width: 110px;
-}
-.position__titles,
-.cours {
-  width: 50px;
-}
 .teg__margin {
   margin: 10px auto;
   grid-column: 2 / span 1;
@@ -44,6 +26,6 @@ input {
   width: 130px;
   height: 30px;
   border-radius: 5px;
-  background: blue;
+  background: rgb(0, 0, 255);
   margin: 10px auto;
 }

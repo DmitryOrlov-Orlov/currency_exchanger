@@ -8,5 +8,6 @@
   font-weight: 700;
   border: none;
   outline: none;
-  background: crimson;
+  background: #fd4c4c;
+  cursor: pointer;
 }

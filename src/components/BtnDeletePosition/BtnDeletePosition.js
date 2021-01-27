@@ -1,6 +1,16 @@
 import React from 'react';
-import classes from './BtnDeletePosition.module.css';
+import { connect } from 'react-redux';
+import { changeDelPosition } from '../../actions';
+import css from './BtnDeletePosition.module.css';
 
-const BtnDeletePosition = () => <button className={classes.btn__delete__position}></button>
+const BtnDeletePosition = ({ changeDelPosition, id }) => {
+  return (
+    <button id={id} onClick={changeDelPosition} className={css.btn__delete__position}></button>
+  )
+}
 
-export default BtnDeletePosition;
+const mapDispatchToProps = (dispatch) => ({
+  changeDelPosition: (event) => dispatch(changeDelPosition(event))
+})
+
+export default connect(null, mapDispatchToProps)(BtnDeletePosition);

@@ -1,59 +1,58 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import BtnDeletePosition from '../BtnDeletePosition/BtnDeletePosition';
 import InputCurrency from '../InputСurrency/InputCurrency';
-import classes from './Position.module.css';
+import { changeCurrencyFirst, changeCurrencyCourse, changeCurrencySecond } from '../../actions';
+import css from './Position.module.css';
 
-const Position = () => {
-  const [currencyFirst, setCurrencyFirst] = useState('');
-  const [cours, setCours] = useState('');
-  const [currencySecond, setCurrencySecond] = useState('');
-  const currencyFirstHeandler = ({ target }) => {
-    setCurrencyFirst(target.value);
-    if (cours === '') {
-      return false;
-    };
-    setCurrencySecond((target.value / cours).toFixed(2));
-  };
-  const coursHeandler = ({ target }) => {
-    setCours(target.value);
-    setCurrencySecond((currencyFirst / target.value).toFixed(2));
-  };
-  const currencySecondHeandler = ({ target }) => {
-    setCurrencySecond(target.value);
-    setCurrencyFirst((target.value * cours).toFixed(2));
-  };
+const Position = ({ id, changeCurrencyFirst, changeCurrencyCourse, changeCurrencySecond,
+  currencyFirst, currencySecond, cours }) => {
+  const onChangeFirst = ({ target }) => {
+    changeCurrencyFirst(target);
+  }
+  const onChangeCourse = ({ target }) => {
+    changeCurrencyCourse(target);
+  }
+  const onChangeSecond = ({ target }) => {
+    changeCurrencySecond(target);
+  }
+
   const InputCurrencyItems = [
     {
-      id: 1,
-      placeholder: '40000',
+      id: id,
+      id_input: 1,
+      placeholder: '0',
       className: 'currency__first',
       value: currencyFirst,
-      onChange: currencyFirstHeandler
+      onChange: onChangeFirst
     },
     {
-      id: 2,
-      placeholder: '72',
+      di: id,
+      id_input: 2,
+      placeholder: '0',
       className: 'cours',
       value: cours,
-      onChange: coursHeandler
+      onChange: onChangeCourse
     },
     {
-      id: 3,
-      placeholder: '555.5555',
+      id: id,
+      id_input: 3,
+      placeholder: '0',
       className: 'currency__second',
       value: currencySecond,
-      onChange: currencySecondHeandler
+      onChange: onChangeSecond
     },
   ];
 
   return (
-    <div className={classes.position}>
-      <div className={classes.position__titles}>
+    <div className={css.position}>
+      <div className={css.position__titles}>
         <p>Российский рубль</p>
         <p>Курс</p>
         <p>Доллар США</p>
         {InputCurrencyItems.map(item => (<InputCurrency
-          key={item.id}
+          id={id}
+          key={item.id_input}
           placeholder={item.placeholder}
           className={item.className}
           value={item.value}
@@ -61,9 +60,15 @@ const Position = () => {
         />)
         )}
       </div>
-      <BtnDeletePosition />
+      <BtnDeletePosition id={id} />
     </div>
   )
 };
 
-export default Position;
+const mapDispatchToProps = (dispatch) => ({
+  changeCurrencyFirst: (value) => dispatch(changeCurrencyFirst(value)),
+  changeCurrencyCourse: (value) => dispatch(changeCurrencyCourse(value)),
+  changeCurrencySecond: (value) => dispatch(changeCurrencySecond(value))
+})
+
+export default connect(null, mapDispatchToProps)(Position);

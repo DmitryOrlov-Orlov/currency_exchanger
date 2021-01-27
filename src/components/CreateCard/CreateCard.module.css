@@ -1,0 +1,21 @@
+.CreateCard {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 540px;
+  height: 50px;
+  margin: 15px auto;
+  border-radius: 5px;
+  padding: 20px;
+  background: rgb(255, 66, 66);
+}
+
+.button {
+  height: 35px;
+  background: rgb(255, 66, 66);
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
