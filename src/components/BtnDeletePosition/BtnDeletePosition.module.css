@@ -10,4 +10,5 @@
   background: url("../../img/1.png");
   background-position: center center no-repeat;
   background-size: 100%;
+  cursor: pointer;
 }

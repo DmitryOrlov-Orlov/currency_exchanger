@@ -1,6 +1,14 @@
 import React from 'react';
-import classes from './BtnAddPosition.module.css';
+import { connect } from 'react-redux';
+import { changeAddPosition } from '../../actions';
+import css from './BtnAddPosition.module.css';
 
-const BtnAddPosition = () => <button className={classes.button}>Добавить позицию</button>
+const BtnAddPosition = ({ changeAddPosition }) => (
+  <button onClick={changeAddPosition} className={css.button}>Добавить позицию</button>
+)
 
-export default BtnAddPosition;
+const mapDispatchToProps = (dispatch) => ({
+  changeAddPosition: () => dispatch(changeAddPosition())
+})
+
+export default connect(null, mapDispatchToProps)(BtnAddPosition);

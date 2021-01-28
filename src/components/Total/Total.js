@@ -1,19 +1,30 @@
 import React from 'react';
-import classes from './Total.module.css';
+import { connect } from 'react-redux';
+import { changeTotalCurrencyFirstAndSecond } from '../../actions';
+import css from './Total.module.css';
 
-const Total = () => {
+const Total = ({ totalCurrencyFirst, totalCurrencySecond, changeTotal }) => {
 
   return (
-    <div className={classes.total}>
-      <div className={classes.total__titles}>
+    <div className={css.total}>
+      <div className={css.total__titles}>
         <p>Российский рубль</p>
-        <p className={classes.total__red}>Итог</p>
+        <p className={css.total__red}>Итог</p>
         <p>Доллар США</p>
-        <div className={classes.total__currency__first}> 40000</div>
-        <div className={classes.total__currency__second}>555.55</div>
+        <div className={css.total__currency__first}>{totalCurrencyFirst}</div>
+        <div className={css.total__currency__second}>{totalCurrencySecond}</div>
       </div>
+      <button onClick={changeTotal}>Рассчитать</button>
     </div >
   )
 }
 
-export default Total;
+const mapStateToProps = (state) => ({
+  totalCurrencyFirst: state.totalCurrencyFirst,
+  totalCurrencySecond: state.totalCurrencySecond
+})
+const mapDispatchToProps = (dispatch) => ({
+  changeTotal: () => dispatch(changeTotalCurrencyFirstAndSecond())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Total);

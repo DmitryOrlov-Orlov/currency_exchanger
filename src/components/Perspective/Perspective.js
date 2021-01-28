@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import InputCurrency from '../InputСurrency/InputCurrency';
 import BtnRestore from '../BtnRestore/BtnRestore';
-import classes from './Perspective.module.css';
+import css from './Perspective.module.css';
 
-const Perspective = () => {
-
+const Perspective = ({ totalCurrencyFirst, totalCurrencySecond }) => {
   const [currencyFirst, setCurrencyFirst] = useState('');
   const [cours, setCours] = useState('');
   const [currencySecond, setCurrencySecond] = useState('');
@@ -26,10 +26,10 @@ const Perspective = () => {
   const InputCurrencyItems = [
     {
       id: 1,
-      placeholder: '40000',
-      className: 'currency__first',
-      value: currencyFirst,
-      onChange: currencyFirstHeandler
+      placeholder: '555.55',
+      className: 'currency__second',
+      value: currencySecond,
+      onChange: currencySecondHeandler
     },
     {
       id: 2,
@@ -40,33 +40,39 @@ const Perspective = () => {
     },
     {
       id: 3,
-      placeholder: '555.5555',
-      className: 'currency__second',
-      value: currencySecond,
-      onChange: currencySecondHeandler
+      placeholder: '40000',
+      className: 'currency__first',
+      value: currencyFirst,
+      onChange: currencyFirstHeandler
     },
   ];
 
-
   return (
-    <div className={classes.perspective}>
+    <div className={css.perspective}>
       <h4>ПЕРСПЕКТИВА (обратнная конвертация)</h4>
-      <p>Российский рубль</p>
-      <p>Текущий Курс</p>
       <p>Доллар США</p>
+      <p>Текущий Курс</p>
+      <p>Российский рубль</p>
       {InputCurrencyItems.map(item => (<InputCurrency
         key={item.id}
+        id={item.id}
         placeholder={item.placeholder}
         className={item.className}
         value={item.value}
         onChange={item.onChange}
       />)
       )}
-      <p className={classes.teg__margin}>Маржа:</p>
-      <div className={classes.margin__number}>+96000</div>
+      <p className={css.teg__margin}>Маржа:</p>
+      <div className={css.margin__number}>+96000</div>
       <BtnRestore />
     </div>
   )
 }
 
-export default Perspective;
+// в процессе
+const mapStateToProps = (state) => ({
+  totalCurrencyFirst: state.totalCurrencyFirst,
+  totalCurrencySecond: state.totalCurrencySecond
+})
+
+export default connect(mapStateToProps)(Perspective);
