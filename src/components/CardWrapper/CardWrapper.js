@@ -4,22 +4,23 @@ import Position from '../Position/Position';
 import Total from '../Total/Total';
 import BtnAddPosition from "../BtnAddPosition/BtnAddPosition";
 import Perspective from '../Perspective/Perspective';
+import { changeAddPosition } from '../../actions';
 import css from './CardWrapper.module.css';
 
-const CardWrapper = ({ cards, test }) => {
+const CardWrapper = ({ cards, changeAddPosition/* , test */ }) => {
+  console.log(cards);
   return (
     <div className={css.card__wrapper}>
       <h4>Карточка “Российкий рубль - Доллар США”</h4>
-      {cards.map(item => {
-        return (<Position
-          key={item.id}
-          id={item.id}
-          currencyFirst={item.currencyFirst}
-          currencySecond={item.currencySecond}
-          cours={item.cours}
-        />)
-      })}
-      <BtnAddPosition />
+      {cards.map(item => <Position
+        key={item.id}
+        id={item.id}
+        currencyFirst={item.currencyFirst}
+        currencySecond={item.currencySecond}
+        cours={item.cours}
+      />
+      )}
+      <BtnAddPosition changeAddPosition={changeAddPosition} />
       <hr />
       <Total />
       <hr />
@@ -29,8 +30,11 @@ const CardWrapper = ({ cards, test }) => {
 }
 
 const mapStateToProps = (state) => ({
-  cards: state.cards,
-  test: state.test//без этой строчик не работает
+  cards: state.cards/* ,
+  test: state.test *///без этой строчик не работает
+})
+const mapDispatchToProps = (dispatch) => ({
+  changeAddPosition: () => dispatch(changeAddPosition())
 })
 
-export default connect(mapStateToProps)(CardWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(CardWrapper);

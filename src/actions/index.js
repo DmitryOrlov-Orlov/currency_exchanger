@@ -1,30 +1,37 @@
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import state from '../store';
 import {
-  ADD_POSITION, DEL_POSITION, CHANGE_CURRENCY_FIRST, CHANGE_CURRENCY_SECOND,
-  CHANGE_CURRENCY_COURSE, TOTAL_CURRENCY_FIRST_AND_SECOND, CARD_PERSPECTIVE
+  ADD_POSITION,
+  DEL_POSITION,
+  CHANGE_CURRENCY_FIRST,
+  CHANGE_CURRENCY_SECOND,
+  CHANGE_CURRENCY_COURSE,
+  TOTAL_CURRENCY_FIRST_AND_SECOND,
+  CARD_PERSPECTIVE
 } from '../constants';
 
 export const changeAddPosition = () => {
+  console.log(uuidv4());
   let cards = state.getState().cards;
   const itemCard = {
-    id: uuid(),
+    id: uuidv4(),
     currencyFirst: '',
     currencySecond: '',
     currencyCourse: ''
   }
   cards.push(itemCard);
-  let newCards = cards;
-
+  const newCards = cards;
+  console.log(newCards);
   return {
     type: ADD_POSITION,
     payload: newCards
   }
 }
-export const changeDelPosition = ({ target }) => {
+export const changeDelPosition = ({ id }) => {
   const cards = state.getState().cards;
-  const idBtnDel = target.id;
+  const idBtnDel = id;
   const newCards = cards.filter((item) => item.id !== idBtnDel);
+
   return {
     type: DEL_POSITION,
     payload: newCards
@@ -32,7 +39,7 @@ export const changeDelPosition = ({ target }) => {
 }
 export const changeCurrencyFirst = (currencyFirst) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencyFirst.id && item.currencyCourse === '') {
       item.currencyFirst = currencyFirst.value;
     }
@@ -50,7 +57,7 @@ export const changeCurrencyFirst = (currencyFirst) => {
 }
 export const changeCurrencyCourse = (currencyCourse) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencyCourse.id && item.currencyFirst === '') {
       item.currencyCourse = currencyCourse.value;
     }
@@ -68,7 +75,7 @@ export const changeCurrencyCourse = (currencyCourse) => {
 }
 export const changeCurrencySecond = (currencySecond) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencySecond.id && item.currencyCourse === '') {
       item.currencySecond = currencySecond.value;
     }
@@ -93,10 +100,10 @@ export const changeTotalCurrencyFirstAndSecond = () => {
       return false;
     }
     if (item.currencySecond !== '') {
-      newTotalCurrencyFirst = +newTotalCurrencyFirst + +item.currencyFirst;
+      newTotalCurrencyFirst = Number(newTotalCurrencyFirst) + Number(item.currencyFirst);
     }
     if (item.currencyFirst !== '') {
-      newTotalCurrencySecond = +newTotalCurrencySecond + +item.currencySecond;
+      newTotalCurrencySecond = Number(newTotalCurrencySecond) + Number(item.currencySecond);
     }
   })
   newTotalCurrencyFirst = newTotalCurrencyFirst.toFixed(2);

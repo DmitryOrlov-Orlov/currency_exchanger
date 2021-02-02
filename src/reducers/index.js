@@ -1,17 +1,26 @@
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import {
-  CHANGE_CURRENCY_FIRST, CHANGE_CURRENCY_SECOND, CHANGE_CURRENCY_COURSE,
-  ADD_POSITION, DEL_POSITION, TOTAL_CURRENCY_FIRST_AND_SECOND, CARD_PERSPECTIVE
+  CHANGE_CURRENCY_FIRST,
+  CHANGE_CURRENCY_SECOND,
+  CHANGE_CURRENCY_COURSE,
+  ADD_POSITION, DEL_POSITION,
+  TOTAL_CURRENCY_FIRST_AND_SECOND,
+  CARD_PERSPECTIVE
 } from '../constants';
 
 const initialState = {
   cards: [
     {
-      id: uuid(),
+      id: uuidv4(),
       currencyFirst: '',
       currencySecond: '',
-      currencyCourse: ''
-    }],
+      currencyCourse: '',
+      pageId: 1
+    },
+  ],
+  pages: [{
+    id: 1,
+  }],
   totalCurrencyFirst: 0,
   totalCurrencySecond: 0,
   cardPerspective: {
@@ -19,14 +28,14 @@ const initialState = {
     perspectiveCurrencySecond: 5,
     perspectiveCurrencyCours: 6,
     difference: 7
-  },
-  test: 0
+  }/* ,
+  test: 0 */
 }
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POSITION:
-      return { ...state, cards: action.payload, test: action.payload + 1/* плохо надо исправлять */ }
+      return { ...state, cards: action.payload /* [...state.cards, action.payload] */ }
     case DEL_POSITION:
       return { ...state, cards: action.payload };
     case CHANGE_CURRENCY_FIRST:
@@ -42,8 +51,6 @@ export const rootReducer = (state = initialState, action) => {
       }
     case CARD_PERSPECTIVE:
       return { ...state, cardPerspective: action.payload }
-
-
     default:
       return state;
   }

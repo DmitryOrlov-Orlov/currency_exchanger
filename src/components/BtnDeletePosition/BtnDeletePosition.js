@@ -10,7 +10,7 @@ const BtnDeletePosition = ({ changeDelPosition, id }) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  changeDelPosition: (event) => dispatch(changeDelPosition(event))
+  changeDelPosition: (event) => dispatch(changeDelPosition(event.target))
 })
 
 export default connect(null, mapDispatchToProps)(BtnDeletePosition);
