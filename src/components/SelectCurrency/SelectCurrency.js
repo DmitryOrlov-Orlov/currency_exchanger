@@ -3,11 +3,16 @@ import Select from 'react-select';
 import currencyItem from '../../json/currencyItem.json';
 import css from './SelectCurrency.module.css';
 
-const SelectCurrency = ({ defaultValue }) => {
+const SelectCurrency = ({ defaultValue, onChange }) => {
 
   return (
     <div>
-      <Select className={css.select} defaultValue={currencyItem[defaultValue]} options={currencyItem} />
+      <Select
+        onChange={onChange}
+        className={css.select}
+        defaultValue={currencyItem[defaultValue]}
+        options={currencyItem}
+      />
     </div>
   )
 }

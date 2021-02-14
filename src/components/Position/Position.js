@@ -12,7 +12,9 @@ const Position = ({
   changeCurrencySecond,
   currencyFirst,
   currencySecond,
-  cours }) => {
+  currencyCourse,
+  cardsNameFirst,
+  cardsNameSecond }) => {
   const onChangeHeandler = ({ target }) => {
     if (target.dataset.onchange === '1') {
       changeCurrencyFirst(target);
@@ -21,7 +23,6 @@ const Position = ({
     } else if (target.dataset.onchange === '3') {
       changeCurrencySecond(target);
     }
-
   }
 
   const InputCurrencyItems = [
@@ -38,7 +39,7 @@ const Position = ({
       id_input: 2,
       placeholder: '0',
       className: 'cours',
-      value: cours,
+      value: currencyCourse,
       onChange: onChangeHeandler
     },
     {
@@ -54,9 +55,9 @@ const Position = ({
   return (
     <div className={css.position}>
       <div className={css.position__titles}>
-        <p>Российский рубль</p>
+        <p>{cardsNameFirst}</p>
         <p>Курс</p>
-        <p>Доллар США</p>
+        <p>{cardsNameSecond}</p>
         {InputCurrencyItems.map(item => (<InputCurrency
           id={id}
           dataOnChange={item.id_input}

@@ -4,6 +4,7 @@ import { changeDelPosition } from '../../actions';
 import css from './BtnDeletePosition.module.css';
 
 const BtnDeletePosition = ({ changeDelPosition, id }) => {
+
   return (
     <button id={id} onClick={changeDelPosition} className={css.btn__delete__position}></button>
   )

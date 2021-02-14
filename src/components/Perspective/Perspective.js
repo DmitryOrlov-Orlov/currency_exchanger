@@ -4,7 +4,7 @@ import InputCurrency from '../InputСurrency/InputCurrency';
 import BtnRestore from '../BtnRestore/BtnRestore';
 import css from './Perspective.module.css';
 
-const Perspective = ({ totalCurrencyFirst, totalCurrencySecond }) => {
+const Perspective = () => {
   const [currencyFirst, setCurrencyFirst] = useState('');
   const [cours, setCours] = useState('');
   const [currencySecond, setCurrencySecond] = useState('');

@@ -1,30 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeTotalCurrencyFirstAndSecond } from '../../actions';
+import { changeTotalCurrency } from '../../actions';
 import css from './Total.module.css';
 
-const Total = ({ totalCurrencyFirst, totalCurrencySecond, changeTotal }) => {
+const Total = ({ pages, activePageId, changeTotalCurrency }) => {
+  let totalCurrencyFirst = 0;
+  let totalCurrencySecond = 0;
+  pages.map(item => {
+    if (item.id === activePageId) {
+      totalCurrencyFirst = item.totalCurrencyFirst;
+      totalCurrencySecond = item.totalCurrencySecond;
+    }
+    return true;
+  })
 
   return (
     <div className={css.total}>
       <div className={css.total__titles}>
-        <p>Российский рубль</p>
+        <p>{pages.map(item => item.id === activePageId ? item.pagesNameFirst : null)}</p>
         <p className={css.total__red}>Итог</p>
-        <p>Доллар США</p>
+        <p>{pages.map(item => item.id === activePageId ? item.pagesNameSecond : null)}</p>
         <div className={css.total__currency__first}>{totalCurrencyFirst}</div>
         <div className={css.total__currency__second}>{totalCurrencySecond}</div>
       </div>
-      <button onClick={changeTotal}>Рассчитать</button>
+      <button onClick={changeTotalCurrency}>Рассчитать</button>
     </div >
   )
 }
 
 const mapStateToProps = (state) => ({
-  totalCurrencyFirst: state.totalCurrencyFirst,
-  totalCurrencySecond: state.totalCurrencySecond
+  pages: state.pages,
+  activePageId: state.activePageId
 })
 const mapDispatchToProps = (dispatch) => ({
-  changeTotal: () => dispatch(changeTotalCurrencyFirstAndSecond())
+  changeTotalCurrency: () => dispatch(changeTotalCurrency())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Total);

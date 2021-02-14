@@ -7,18 +7,24 @@ import Perspective from '../Perspective/Perspective';
 import { changeAddPosition } from '../../actions';
 import css from './CardWrapper.module.css';
 
-const CardWrapper = ({ cards, changeAddPosition/* , test */ }) => {
-  console.log(cards);
+const CardWrapper = ({ cards, changeAddPosition, activePageId, pages }) => {
+
   return (
     <div className={css.card__wrapper}>
-      <h4>Карточка “Российкий рубль - Доллар США”</h4>
-      {cards.map(item => <Position
+      <h4>
+        {pages.map(item => item.id === activePageId ? item.pagesNameFirst : null)}
+      -
+        {pages.map(item => item.id === activePageId ? item.pagesNameSecond : null)}
+      </h4>
+      {cards.map(item => item.pageId === activePageId ? <Position
         key={item.id}
         id={item.id}
         currencyFirst={item.currencyFirst}
         currencySecond={item.currencySecond}
-        cours={item.cours}
-      />
+        currencyCourse={item.currencyCourse}
+        cardsNameFirst={item.cardsNameFirst}
+        cardsNameSecond={item.cardsNameSecond}
+      /> : null
       )}
       <BtnAddPosition changeAddPosition={changeAddPosition} />
       <hr />
@@ -30,8 +36,9 @@ const CardWrapper = ({ cards, changeAddPosition/* , test */ }) => {
 }
 
 const mapStateToProps = (state) => ({
-  cards: state.cards/* ,
-  test: state.test *///без этой строчик не работает
+  cards: state.cards,
+  activePageId: state.activePageId,
+  pages: state.pages
 })
 const mapDispatchToProps = (dispatch) => ({
   changeAddPosition: () => dispatch(changeAddPosition())
