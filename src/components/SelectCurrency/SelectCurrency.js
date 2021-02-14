@@ -1,40 +1,19 @@
 import React from 'react';
+import Select from 'react-select';
+import currencyItem from '../../json/currencyItem.json';
 import css from './SelectCurrency.module.css';
 
-const SelectCurrency = () => {
-  const currencyItem = [
-    {
-      id: 1,
-      currency: "Российский рубль"
-    },
-    {
-      id: 2,
-      currency: "Доллар США"
-    },
-    {
-      id: 3,
-      currency: "Евро"
-    },
-    {
-      id: 4,
-      currency: "Фунт стерлингов"
-    },
-    {
-      id: 5,
-      currency: "Биткоин"
-    },
-    {
-      id: 6,
-      currency: "Эфириум"
-    },
-  ]
+const SelectCurrency = ({ defaultValue, onChange }) => {
 
   return (
-    <select className={css.select}>
-      {currencyItem.map((item) => (
-        <option key={item.id} value={item.currency}>{item.currency}</option>)
-      )}
-    </select>
+    <div>
+      <Select
+        onChange={onChange}
+        className={css.select}
+        defaultValue={currencyItem[defaultValue]}
+        options={currencyItem}
+      />
+    </div>
   )
 }
 

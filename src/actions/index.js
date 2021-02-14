@@ -1,30 +1,51 @@
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import state from '../store';
 import {
-  ADD_POSITION, DEL_POSITION, CHANGE_CURRENCY_FIRST, CHANGE_CURRENCY_SECOND,
-  CHANGE_CURRENCY_COURSE, TOTAL_CURRENCY_FIRST_AND_SECOND, CARD_PERSPECTIVE
+  ADD_POSITION,
+  DEL_POSITION,
+  CHANGE_CURRENCY_FIRST,
+  CHANGE_CURRENCY_SECOND,
+  CHANGE_CURRENCY_COURSE,
+  CARD_PERSPECTIVE,
+  NAME_CURRENCY_FIRST,
+  NAME_CURRENCY_SECOND,
+  CREATE_CARD,
+  DELETE_CARD,
+  ACTIVE_PAGE_ID,
+  TOTAL_CURRENCY
 } from '../constants';
 
 export const changeAddPosition = () => {
-  let cards = state.getState().cards;
+  const activePageId = state.getState().activePageId;
+  const pages = state.getState().pages;
+  let cardsNameFirst = '';
+  let cardsNameSecond = '';
+  pages.forEach(item => {
+    if (item.id === activePageId) {
+      cardsNameFirst = item.pagesNameFirst;
+      cardsNameSecond = item.pagesNameSecond;
+    }
+  })
   const itemCard = {
-    id: uuid(),
+    id: uuidv4(),
     currencyFirst: '',
     currencySecond: '',
-    currencyCourse: ''
+    currencyCourse: '',
+    pageId: activePageId,
+    cardsNameFirst: cardsNameFirst,
+    cardsNameSecond: cardsNameSecond
   }
-  cards.push(itemCard);
-  let newCards = cards;
 
   return {
     type: ADD_POSITION,
-    payload: newCards
+    payload: itemCard
   }
 }
-export const changeDelPosition = ({ target }) => {
+export const changeDelPosition = ({ id }) => {
   const cards = state.getState().cards;
-  const idBtnDel = target.id;
+  const idBtnDel = id;
   const newCards = cards.filter((item) => item.id !== idBtnDel);
+
   return {
     type: DEL_POSITION,
     payload: newCards
@@ -32,7 +53,7 @@ export const changeDelPosition = ({ target }) => {
 }
 export const changeCurrencyFirst = (currencyFirst) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencyFirst.id && item.currencyCourse === '') {
       item.currencyFirst = currencyFirst.value;
     }
@@ -50,7 +71,7 @@ export const changeCurrencyFirst = (currencyFirst) => {
 }
 export const changeCurrencyCourse = (currencyCourse) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencyCourse.id && item.currencyFirst === '') {
       item.currencyCourse = currencyCourse.value;
     }
@@ -68,7 +89,7 @@ export const changeCurrencyCourse = (currencyCourse) => {
 }
 export const changeCurrencySecond = (currencySecond) => {
   const cards = state.getState().cards;
-  let newCards = cards.map(item => {
+  const newCards = cards.map(item => {
     if (item.id === currencySecond.id && item.currencyCourse === '') {
       item.currencySecond = currencySecond.value;
     }
@@ -84,35 +105,80 @@ export const changeCurrencySecond = (currencySecond) => {
     payload: newCards
   }
 }
-export const changeTotalCurrencyFirstAndSecond = () => {
+export const changeTotalCurrency = () => {
+  const pages = state.getState().pages;
+  const activePageId = state.getState().activePageId;
   const cards = state.getState().cards;
-  let newTotalCurrencyFirst = 0;
-  let newTotalCurrencySecond = 0;
-  cards.forEach((item) => {
-    if (item.currencyCourse === '') {
-      return false;
+  let totalCurrencyFirst = '';
+  let totalCurrencySecond = '';
+  cards.map(item => {
+    if (item.pageId === activePageId) {
+      totalCurrencyFirst = (Number(totalCurrencyFirst) + Number(item.currencyFirst)).toFixed(2);
+      totalCurrencySecond = (Number(totalCurrencySecond) + Number(item.currencySecond)).toFixed(2);
     }
-    if (item.currencySecond !== '') {
-      newTotalCurrencyFirst = +newTotalCurrencyFirst + +item.currencyFirst;
-    }
-    if (item.currencyFirst !== '') {
-      newTotalCurrencySecond = +newTotalCurrencySecond + +item.currencySecond;
-    }
+    return true;
   })
-  newTotalCurrencyFirst = newTotalCurrencyFirst.toFixed(2);
-  newTotalCurrencySecond = newTotalCurrencySecond.toFixed(2);
+  const newPages = pages.map(item => {
+    if (item.id === activePageId) {
+      item.totalCurrencyFirst = totalCurrencyFirst;
+      item.totalCurrencySecond = totalCurrencySecond;
+    }
+    return item;
+  })
 
   return {
-    type: TOTAL_CURRENCY_FIRST_AND_SECOND,
-    totalCurrencyFirst: newTotalCurrencyFirst,
-    totalCurrencySecond: newTotalCurrencySecond
+    type: TOTAL_CURRENCY,
+    payload: newPages
   }
 }
+export const changeNameCurrencyFirst = (value) => {
 
+  return {
+    type: NAME_CURRENCY_FIRST,
+    nameFirst: value
+  }
+}
+export const changeNameCurrencySecond = (value) => {
+
+  return {
+    type: NAME_CURRENCY_SECOND,
+    nameSecond: value
+  }
+}
+export const changeCreateCard = (nameFirst, nameSecond) => {
+  const id = uuidv4();
+  const newCard = {
+    id: id,
+    pagesNameFirst: nameFirst,
+    pagesNameSecond: nameSecond,
+    totalCurrencyFirst: 0,
+    totalCurrencySecond: 0
+  }
+
+  return {
+    type: CREATE_CARD,
+    payload: newCard,
+    activePageId: id,
+  }
+}
+export const changeDeleteCard = ({ id }) => {
+  const pages = state.getState().pages;
+  const newPages = pages.filter((item) => item.id !== id);
+
+  return {
+    type: DELETE_CARD,
+    payload: newPages
+  }
+}
+export const changeActivePageId = ({ id }) => {
+
+  return {
+    type: ACTIVE_PAGE_ID,
+    payload: id,
+  }
+}
 export const changeCardPerspective = () => {
   //в процессе
-  const cards = state.getState().cards;
-  console.log(cards);
 
   return {
     type: CARD_PERSPECTIVE,

@@ -5,16 +5,24 @@ import InputCurrency from '../InputСurrency/InputCurrency';
 import { changeCurrencyFirst, changeCurrencyCourse, changeCurrencySecond } from '../../actions';
 import css from './Position.module.css';
 
-const Position = ({ id, changeCurrencyFirst, changeCurrencyCourse, changeCurrencySecond,
-  currencyFirst, currencySecond, cours }) => {
-  const onChangeFirst = ({ target }) => {
-    changeCurrencyFirst(target);
-  }
-  const onChangeCourse = ({ target }) => {
-    changeCurrencyCourse(target);
-  }
-  const onChangeSecond = ({ target }) => {
-    changeCurrencySecond(target);
+const Position = ({
+  id,
+  changeCurrencyFirst,
+  changeCurrencyCourse,
+  changeCurrencySecond,
+  currencyFirst,
+  currencySecond,
+  currencyCourse,
+  cardsNameFirst,
+  cardsNameSecond }) => {
+  const onChangeHeandler = ({ target }) => {
+    if (target.dataset.onchange === '1') {
+      changeCurrencyFirst(target);
+    } else if (target.dataset.onchange === '2') {
+      changeCurrencyCourse(target);
+    } else if (target.dataset.onchange === '3') {
+      changeCurrencySecond(target);
+    }
   }
 
   const InputCurrencyItems = [
@@ -24,15 +32,15 @@ const Position = ({ id, changeCurrencyFirst, changeCurrencyCourse, changeCurrenc
       placeholder: '0',
       className: 'currency__first',
       value: currencyFirst,
-      onChange: onChangeFirst
+      onChange: onChangeHeandler
     },
     {
-      di: id,
+      id: id,
       id_input: 2,
       placeholder: '0',
       className: 'cours',
-      value: cours,
-      onChange: onChangeCourse
+      value: currencyCourse,
+      onChange: onChangeHeandler
     },
     {
       id: id,
@@ -40,18 +48,19 @@ const Position = ({ id, changeCurrencyFirst, changeCurrencyCourse, changeCurrenc
       placeholder: '0',
       className: 'currency__second',
       value: currencySecond,
-      onChange: onChangeSecond
+      onChange: onChangeHeandler
     },
   ];
 
   return (
     <div className={css.position}>
       <div className={css.position__titles}>
-        <p>Российский рубль</p>
+        <p>{cardsNameFirst}</p>
         <p>Курс</p>
-        <p>Доллар США</p>
+        <p>{cardsNameSecond}</p>
         {InputCurrencyItems.map(item => (<InputCurrency
           id={id}
+          dataOnChange={item.id_input}
           key={item.id_input}
           placeholder={item.placeholder}
           className={item.className}

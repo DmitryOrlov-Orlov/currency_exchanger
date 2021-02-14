@@ -4,22 +4,29 @@ import Position from '../Position/Position';
 import Total from '../Total/Total';
 import BtnAddPosition from "../BtnAddPosition/BtnAddPosition";
 import Perspective from '../Perspective/Perspective';
+import { changeAddPosition } from '../../actions';
 import css from './CardWrapper.module.css';
 
-const CardWrapper = ({ cards, test }) => {
+const CardWrapper = ({ cards, changeAddPosition, activePageId, pages }) => {
+
   return (
     <div className={css.card__wrapper}>
-      <h4>Карточка “Российкий рубль - Доллар США”</h4>
-      {cards.map(item => {
-        return (<Position
-          key={item.id}
-          id={item.id}
-          currencyFirst={item.currencyFirst}
-          currencySecond={item.currencySecond}
-          cours={item.cours}
-        />)
-      })}
-      <BtnAddPosition />
+      <h4>
+        {pages.map(item => item.id === activePageId ? item.pagesNameFirst : null)}
+      -
+        {pages.map(item => item.id === activePageId ? item.pagesNameSecond : null)}
+      </h4>
+      {cards.map(item => item.pageId === activePageId ? <Position
+        key={item.id}
+        id={item.id}
+        currencyFirst={item.currencyFirst}
+        currencySecond={item.currencySecond}
+        currencyCourse={item.currencyCourse}
+        cardsNameFirst={item.cardsNameFirst}
+        cardsNameSecond={item.cardsNameSecond}
+      /> : null
+      )}
+      <BtnAddPosition changeAddPosition={changeAddPosition} />
       <hr />
       <Total />
       <hr />
@@ -30,7 +37,11 @@ const CardWrapper = ({ cards, test }) => {
 
 const mapStateToProps = (state) => ({
   cards: state.cards,
-  test: state.test//без этой строчик не работает
+  activePageId: state.activePageId,
+  pages: state.pages
+})
+const mapDispatchToProps = (dispatch) => ({
+  changeAddPosition: () => dispatch(changeAddPosition())
 })
 
-export default connect(mapStateToProps)(CardWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(CardWrapper);
