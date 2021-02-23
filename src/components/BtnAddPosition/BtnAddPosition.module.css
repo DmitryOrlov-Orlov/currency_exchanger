@@ -9,3 +9,6 @@
   cursor: pointer;
   margin-top: 15px;
 }
+.button:hover {
+  background: #ff5555;
+}

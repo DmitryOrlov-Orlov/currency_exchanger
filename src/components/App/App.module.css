@@ -1,9 +1,10 @@
 .wrapper {
   display: block;
   text-align: center;
-  width: 700px;
-  background: rgb(121, 46, 46);
-  margin: 10px auto;
+  width: 800px;
+  background: rgb(16 26 80);
+  margin: 0 auto;
+  color: #ffffff;
   padding: 10px 30px 10px;
 }
 .wrapper h1 {

@@ -2,17 +2,16 @@ import { connect } from 'react-redux';
 import CreateCard from '../CreateCard/CreateCard';
 import CardWrapper from '../CardWrapper/CardWrapper';
 import SheetsWrapper from '../SheetsWrapper/SheetsWrapper';
-
-import './App.css';
+import css from './App.module.css';
 
 const App = ({ pages }) => {
 
   return (
-    <div className='wrapper'>
+    <div className={css.wrapper}>
       <h1>Currency exchanger</h1>
       <CreateCard />
       <SheetsWrapper />
-      {pages.length !== 0 ? <CardWrapper /> : null}
+      {pages.length !== 0 && <CardWrapper />}
     </div>
   );
 }

@@ -1,9 +1,10 @@
 .card__wrapper {
-  width: 500px;
-  background: rgb(128, 255, 0);
+  width: 650px;
+  background: rgb(20 60 98);
   margin: 0 auto;
   padding: 20px;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 .card__wrapper h4 {
   margin: 0;
