@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import BtnDeletePosition from '../BtnDeletePosition/BtnDeletePosition';
 import InputCurrency from '../InputСurrency/InputCurrency';
-import { changeCurrencyFirst, changeCurrencyCourse, changeCurrencySecond } from '../../actions';
+import {
+  changeCurrencyFirst,
+  changeCurrencyCourse,
+  changeCurrencySecond,
+} from '../../actions';
 import css from './Position.module.css';
 
 const Position = ({
@@ -16,11 +20,11 @@ const Position = ({
   cardsNameFirst,
   cardsNameSecond }) => {
   const onChangeHeandler = ({ target }) => {
-    if (target.dataset.onchange === '1') {
+    if (target.dataset.idInput === '1') {
       changeCurrencyFirst(target);
-    } else if (target.dataset.onchange === '2') {
+    } else if (target.dataset.idInput === '2') {
       changeCurrencyCourse(target);
-    } else if (target.dataset.onchange === '3') {
+    } else if (target.dataset.idInput === '3') {
       changeCurrencySecond(target);
     }
   }
@@ -60,7 +64,7 @@ const Position = ({
         <p>{cardsNameSecond}</p>
         {InputCurrencyItems.map(item => (<InputCurrency
           id={id}
-          dataOnChange={item.id_input}
+          dataIdInput={item.id_input}
           key={item.id_input}
           placeholder={item.placeholder}
           className={item.className}
@@ -77,7 +81,7 @@ const Position = ({
 const mapDispatchToProps = (dispatch) => ({
   changeCurrencyFirst: (value) => dispatch(changeCurrencyFirst(value)),
   changeCurrencyCourse: (value) => dispatch(changeCurrencyCourse(value)),
-  changeCurrencySecond: (value) => dispatch(changeCurrencySecond(value))
+  changeCurrencySecond: (value) => dispatch(changeCurrencySecond(value)),
 })
 
 export default connect(null, mapDispatchToProps)(Position);

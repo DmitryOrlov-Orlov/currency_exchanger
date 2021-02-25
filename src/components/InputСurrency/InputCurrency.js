@@ -1,12 +1,12 @@
 import React from 'react';
 import './InputCurrency.css';
 
-const InputCurrency = ({ id, placeholder, className, value, onChange, dataOnChange }) => {
+const InputCurrency = ({ id, placeholder, className, value, onChange, dataIdInput }) => {
 
   return (
     <input
       id={id}
-      data-onchange={dataOnChange}
+      data-id-input={dataIdInput}
       type="number"
       placeholder={placeholder}
       className={className}

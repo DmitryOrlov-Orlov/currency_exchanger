@@ -1,9 +1,9 @@
 .total {
   position: relative;
-  width: 415px;
-  padding: 15px 14px;
+  width: 90%;
+  padding: 15px 0px;
   border-radius: 5px;
-  background: #816eff;
+  background: #003edb;
   margin: 15px auto;
 }
 
@@ -24,6 +24,8 @@
   height: 30px;
   border-radius: 5px;
   background: #fff;
+  margin: 0 auto;
+  color: #000000;
 }
 .total__currency__second {
   display: flex;
@@ -35,8 +37,24 @@
   background: #fff;
   grid-column: 3;
   grid-row: 2;
+  margin: 0 auto;
+  color: #000000;
 }
 
 .total__red {
   color: rgb(255, 0, 0);
+}
+.button {
+  width: 160px;
+  height: 35px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background: rgb(226, 22, 63);
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 15px;
+}
+.button:hover {
+  background: #ff5555;
 }

@@ -1,19 +1,18 @@
 .sheet {
   display: flex;
-  box-sizing: border-box;
+  justify-content: space-between;
   border: 1px solid #fff;
   border-radius: 5px;
   padding: 5px;
-  margin: 5px 0;
+  margin: 5px 10px;
 }
 .sheet:hover {
   background: rgb(255, 86, 86);
   cursor: pointer;
 }
-.a {
-  color: rgb(9, 255, 0);
+.active {
+  background: rgb(66, 248, 34);
 }
-
 .button {
   margin-left: 10px;
   width: 20px;
@@ -25,4 +24,7 @@
   background-position: center center no-repeat;
   background-size: 100%;
   cursor: pointer;
+}
+.sheet__currencies {
+  display: flex;
 }

@@ -1,53 +1,36 @@
-/* import { v4 as uuidv4 } from 'uuid'; */
 import currencyItem from '../json/currencyItem.json';
 import {
   CHANGE_CURRENCY_FIRST,
   CHANGE_CURRENCY_SECOND,
   CHANGE_CURRENCY_COURSE,
   ADD_POSITION, DEL_POSITION,
-  CARD_PERSPECTIVE,
   NAME_CURRENCY_FIRST,
   NAME_CURRENCY_SECOND,
   CREATE_CARD,
   DELETE_CARD,
   ACTIVE_PAGE_ID,
-  TOTAL_CURRENCY
+  TOTAL_CURRENCY,
+  RATE_FIRST,
+  RATE_SECOND,
+  RESULT_OF_PERSPECTIVE,
+  CHANGE_RESULT_FIRST,
+  CHANGE_RESULT_SECOND,
+  CHANGE_RESULT_COURS
 } from '../constants';
 
 const initialState = {
-  cards: [
-    /* {
-      id: uuidv4(),
-      currencyFirst: '',
-      currencySecond: '',
-      currencyCourse: '',
-      pageId: 1,
-      cardsNameFirst: '',
-      cardsNameSecond: ''
-    }, */
-  ],
-  pages: [/* {
-    id: uuidv4(),
-    pagesNameFirst: 'Российский рубль-test',
-    pagesNameSecond: 'Доллар США-test',
-    totalCurrencyFirst:0,
-    totalCurrencySecond: 0
-  } */
-  ],
+  cards: [],
+  pages: [],
   activePageId: null,
   nameFirst: currencyItem[0].value,
   nameSecond: currencyItem[1].value,
-  cardPerspective: {
-    perspectiveCurrencyFirst: 4,
-    perspectiveCurrencySecond: 5,
-    perspectiveCurrencyCours: 6,
-    difference: 7
-  }
+  rateFirst: currencyItem[0].rate,
+  rateSecond: currencyItem[1].rate
 }
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POSITION:
-      return { ...state, cards: [...state.cards, action.payload] }
+      return { ...state, cards: [...state.cards, action.payload] };
     case DEL_POSITION:
       return { ...state, cards: action.payload };
     case CHANGE_CURRENCY_FIRST:
@@ -57,23 +40,34 @@ export const rootReducer = (state = initialState, action) => {
     case CHANGE_CURRENCY_SECOND:
       return { ...state, cards: action.payload };
     case NAME_CURRENCY_FIRST:
-      return { ...state, nameFirst: action.nameFirst }
+      return { ...state, nameFirst: action.payload };
     case NAME_CURRENCY_SECOND:
-      return { ...state, nameSecond: action.nameSecond }
+      return { ...state, nameSecond: action.payload };
     case CREATE_CARD:
       return {
         ...state,
         pages: [...state.pages, action.payload],
-        activePageId: action.activePageId
-      }
+        activePageId: action.activePageId,
+        cards: [...state.cards, action.cards]
+      };
     case DELETE_CARD:
-      return { ...state, pages: action.payload }
+      return { ...state, pages: action.payload };
     case ACTIVE_PAGE_ID:
-      return { ...state, activePageId: action.payload }
+      return { ...state, activePageId: action.payload };
     case TOTAL_CURRENCY:
+      return { ...state, pages: action.payload };
+    case RATE_FIRST:
+      return { ...state, rateFirst: action.payload };
+    case RATE_SECOND:
+      return { ...state, rateSecond: action.payload };
+    case RESULT_OF_PERSPECTIVE:
       return { ...state, pages: action.payload }
-    case CARD_PERSPECTIVE:
-      return { ...state, cardPerspective: action.payload }
+    case CHANGE_RESULT_FIRST:
+      return { ...state, pages: action.payload }
+    case CHANGE_RESULT_SECOND:
+      return { ...state, pages: action.payload }
+    case CHANGE_RESULT_COURS:
+      return { ...state, pages: action.payload }
     default:
       return state;
   }

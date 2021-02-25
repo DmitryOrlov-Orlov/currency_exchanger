@@ -1,10 +1,11 @@
 .position {
   position: relative;
-  width: 415px;
+  width: 90%;
   padding: 15px 14px;
   border-radius: 5px;
-  background: #816eff;
+  background: #003edb;
   margin: 15px auto 0;
+  box-sizing: border-box;
 }
 
 .position__titles {

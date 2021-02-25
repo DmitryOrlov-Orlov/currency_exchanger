@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import state from '../store';
 import {
   ADD_POSITION,
@@ -6,16 +7,21 @@ import {
   CHANGE_CURRENCY_FIRST,
   CHANGE_CURRENCY_SECOND,
   CHANGE_CURRENCY_COURSE,
-  CARD_PERSPECTIVE,
   NAME_CURRENCY_FIRST,
   NAME_CURRENCY_SECOND,
   CREATE_CARD,
   DELETE_CARD,
   ACTIVE_PAGE_ID,
-  TOTAL_CURRENCY
+  TOTAL_CURRENCY,
+  RATE_FIRST,
+  RATE_SECOND,
+  RESULT_OF_PERSPECTIVE,
+  CHANGE_RESULT_FIRST,
+  CHANGE_RESULT_SECOND,
+  CHANGE_RESULT_COURS
 } from '../constants';
 
-export const changeAddPosition = () => {
+export const addPosition = () => {
   const activePageId = state.getState().activePageId;
   const pages = state.getState().pages;
   let cardsNameFirst = '';
@@ -41,7 +47,7 @@ export const changeAddPosition = () => {
     payload: itemCard
   }
 }
-export const changeDelPosition = ({ id }) => {
+export const deletePosition = ({ id }) => {
   const cards = state.getState().cards;
   const idBtnDel = id;
   const newCards = cards.filter((item) => item.id !== idBtnDel);
@@ -113,8 +119,8 @@ export const changeTotalCurrency = () => {
   let totalCurrencySecond = '';
   cards.map(item => {
     if (item.pageId === activePageId) {
-      totalCurrencyFirst = (Number(totalCurrencyFirst) + Number(item.currencyFirst)).toFixed(2);
-      totalCurrencySecond = (Number(totalCurrencySecond) + Number(item.currencySecond)).toFixed(2);
+      totalCurrencyFirst = Number(totalCurrencyFirst) + Number(item.currencyFirst);
+      totalCurrencySecond = Number(totalCurrencySecond) + Number(item.currencySecond);
     }
     return true;
   })
@@ -135,33 +141,49 @@ export const changeNameCurrencyFirst = (value) => {
 
   return {
     type: NAME_CURRENCY_FIRST,
-    nameFirst: value
+    payload: value
   }
 }
 export const changeNameCurrencySecond = (value) => {
 
   return {
     type: NAME_CURRENCY_SECOND,
-    nameSecond: value
+    payload: value
   }
 }
-export const changeCreateCard = (nameFirst, nameSecond) => {
+export const createCard = (nameFirst, nameSecond, rateFirst, rateSecond) => {
   const id = uuidv4();
   const newCard = {
     id: id,
     pagesNameFirst: nameFirst,
     pagesNameSecond: nameSecond,
     totalCurrencyFirst: 0,
-    totalCurrencySecond: 0
+    totalCurrencySecond: 0,
+    rateFirst: rateFirst,
+    rateSecond: rateSecond,
+    apiCours: 0,
+    perspectiveCurrencyFirst: 0,
+    perspectiveCurrencySecond: 0,
+    margin: 0
+  }
+  const itemCard = {
+    id: uuidv4(),
+    currencyFirst: '',
+    currencySecond: '',
+    currencyCourse: '',
+    pageId: id,
+    cardsNameFirst: nameFirst,
+    cardsNameSecond: nameSecond
   }
 
   return {
     type: CREATE_CARD,
     payload: newCard,
     activePageId: id,
+    cards: itemCard
   }
 }
-export const changeDeleteCard = ({ id }) => {
+export const deleteCard = (id) => {
   const pages = state.getState().pages;
   const newPages = pages.filter((item) => item.id !== id);
 
@@ -170,18 +192,97 @@ export const changeDeleteCard = ({ id }) => {
     payload: newPages
   }
 }
-export const changeActivePageId = ({ id }) => {
+export const changeActivePageId = (id) => {
 
   return {
     type: ACTIVE_PAGE_ID,
     payload: id,
   }
 }
-export const changeCardPerspective = () => {
-  //в процессе
+export const changeRateFirst = (value) => {
 
   return {
-    type: CARD_PERSPECTIVE,
-    payload: '123'
+    type: RATE_FIRST,
+    payload: value
+  }
+}
+export const changeRateSecond = (value) => {
+
+  return {
+    type: RATE_SECOND,
+    payload: value
+  }
+}
+export const changeResultOfPerspective = () => dispatch => {
+  const activePageId = state.getState().activePageId;
+  const rateFirst = state.getState().rateFirst;
+  const rateSecond = state.getState().rateSecond;
+  const pages = state.getState().pages;
+  axios.get(`https://api.exchangeratesapi.io/latest?base=${rateSecond}`, {})
+    .then(res => {
+      let apiCours = res.data.rates[rateFirst];
+      const newCard = pages.map(item => {
+        if (item.id === activePageId) {
+          item.apiCours = (apiCours).toFixed(2);
+          item.perspectiveCurrencySecond = (item.totalCurrencySecond).toFixed(2);
+          item.perspectiveCurrencyFirst = (apiCours * item.totalCurrencySecond).toFixed(2);
+          item.margin = (apiCours * item.totalCurrencySecond) - item.totalCurrencyFirst;
+        }
+        return item;
+      })
+      dispatch({
+        type: RESULT_OF_PERSPECTIVE,
+        payload: newCard
+      });
+    })
+}
+export const changeResultFirst = (value) => {
+  const pages = state.getState().pages;
+  const activePageId = state.getState().activePageId;
+  const newPages = pages.map(item => {
+    if (item.id === activePageId) {
+      item.perspectiveCurrencyFirst = value;
+      item.perspectiveCurrencySecond = value / item.apiCours;
+      item.margin = value - item.totalCurrencyFirst;
+    }
+    return item;
+  })
+  return {
+    type: CHANGE_RESULT_FIRST,
+    payload: newPages
+  }
+}
+export const changeResultSecond = (value) => {
+  const pages = state.getState().pages;
+  const activePageId = state.getState().activePageId;
+  const newPages = pages.map(item => {
+    if (item.id === activePageId) {
+      item.perspectiveCurrencySecond = value;
+      item.perspectiveCurrencyFirst = value * item.apiCours;
+      item.margin = item.perspectiveCurrencyFirst - item.totalCurrencyFirst;
+    }
+    return item;
+  })
+
+  return {
+    type: CHANGE_RESULT_SECOND,
+    payload: newPages
+  }
+}
+export const changeResultCours = (value) => {
+  const pages = state.getState().pages;
+  const activePageId = state.getState().activePageId;
+  const newPages = pages.map(item => {
+    if (item.id === activePageId) {
+      item.apiCours = value;
+      item.perspectiveCurrencyFirst = value * item.perspectiveCurrencySecond;
+      item.margin = item.perspectiveCurrencyFirst - item.totalCurrencyFirst;
+    }
+    return item;
+  })
+
+  return {
+    type: CHANGE_RESULT_COURS,
+    payload: newPages
   }
 }

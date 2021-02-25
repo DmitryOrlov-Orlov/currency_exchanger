@@ -4,25 +4,37 @@ import SelectCurrency from '../SelectCurrency/SelectCurrency';
 import {
   changeNameCurrencyFirst,
   changeNameCurrencySecond,
-  changeCreateCard
+  changeRateFirst,
+  changeRateSecond,
+  createCard
 } from '../../actions/';
 import css from './CreateCard.module.css';
 
 const CreateCard = ({
   nameFirst,
   nameSecond,
+  rateFirst,
+  rateSecond,
   changeNameCurrencyFirst,
   changeNameCurrencySecond,
-  changeCreateCard
+  changeRateFirst,
+  changeRateSecond,
+  createCard
 }) => {
   const onChangeCurrencyFirst = (event) => {
-    changeNameCurrencyFirst(event.value)
+    let value = event.value;
+    let rateFirst = event.rate;
+    changeNameCurrencyFirst(value);
+    changeRateFirst(rateFirst);
   }
   const onChangeCurrencySecond = (event) => {
-    changeNameCurrencySecond(event.value);
+    let value = event.value;
+    let rateSecond = event.rate;
+    changeNameCurrencySecond(value);
+    changeRateSecond(rateSecond);
   }
   const createCardHendler = () => {
-    changeCreateCard(nameFirst, nameSecond);
+    createCard(nameFirst, nameSecond, rateFirst, rateSecond);
   }
 
   return (
@@ -38,12 +50,17 @@ const CreateCard = ({
 
 const mapStateToProps = (state) => ({
   nameFirst: state.nameFirst,
-  nameSecond: state.nameSecond
+  nameSecond: state.nameSecond,
+  rateFirst: state.rateFirst,
+  rateSecond: state.rateSecond
 })
 const mapDispatchToProps = (dispatch) => ({
   changeNameCurrencyFirst: (value) => dispatch(changeNameCurrencyFirst(value)),
   changeNameCurrencySecond: (value) => dispatch(changeNameCurrencySecond(value)),
-  changeCreateCard: (nameFirst, nameSecond) => dispatch(changeCreateCard(nameFirst, nameSecond))
+  changeRateFirst: (value) => dispatch(changeRateFirst(value)),
+  changeRateSecond: (value) => dispatch(changeRateSecond(value)),
+  createCard: (nameFirst, nameSecond, rateFirst, rateSecond) =>
+    dispatch(createCard(nameFirst, nameSecond, rateFirst, rateSecond))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateCard);
